@@ -1,0 +1,23 @@
+---
+layout: default
+title: 首页
+---
+<section class="intro">
+  <h1>欢迎来到我的博客</h1>
+  <p>{{ site.description | escape }}</p>
+</section>
+
+<section aria-labelledby="posts-heading">
+  <h2 id="posts-heading">文章</h2>
+  {% if site.posts.size > 0 %}
+    {% for post in site.posts %}
+      <article class="post-preview">
+        <p class="post-meta"><time datetime="{{ post.date | date: '%Y-%m-%d' }}">{{ post.date | date: '%Y 年 %m 月 %d 日' }}</time></p>
+        <h3><a href="{{ post.url | relative_url }}">{{ post.title | escape }}</a></h3>
+        <div class="excerpt">{{ post.excerpt }}</div>
+      </article>
+    {% endfor %}
+  {% else %}
+    <p>还没有文章。</p>
+  {% endif %}
+</section>

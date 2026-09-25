@@ -1,0 +1,9 @@
+---
+layout: default
+---
+<article class="post">
+  <p class="post-meta"><time datetime="{{ page.date | date: '%Y-%m-%d' }}">{{ page.date | date: '%Y 年 %m 月 %d 日' }}</time></p>
+  <h1>{{ page.title | escape }}</h1>
+  <div class="post-content">{{ content }}</div>
+  <p class="back-link"><a href="{{ '/' | relative_url }}">← 返回首页</a></p>
+</article>
