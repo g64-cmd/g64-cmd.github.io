@@ -1,4 +1,44 @@
 title: g64-cmd 的博客
-description: 随笔与学习记录
+description: 记录学习的过程，也记录技术之外的思考。
 lang: zh-CN
 timezone: Asia/Shanghai
+url: https://g64-cmd.github.io
+baseurl: ""
+permalink: /:year/:month/:day/:title/
+markdown: kramdown
+highlighter: rouge
+kramdown:
+  input: GFM
+  syntax_highlighter: rouge
+collections:
+  series:
+    output: true
+    permalink: /series/:name/
+defaults:
+  - scope:
+      path: ""
+      type: posts
+    values:
+      layout: post
+      kind: 随笔
+  - scope:
+      path: ""
+      type: drafts
+    values:
+      layout: post
+      kind: 随笔
+  - scope:
+      path: ""
+      type: series
+    values:
+      layout: series
+exclude:
+  - README.md
+  - Gemfile
+  - Gemfile.lock
+  - templates
+  - scripts
+  - vendor
+  - node_modules
+  - package.json
+  - package-lock.json

@@ -1,0 +1,7 @@
+---
+layout: default
+---
+<header class="page-heading"><a class="back-link" href="{{ '/series/' | relative_url }}">← 全部系列</a><p class="eyebrow">系列</p><h1>{{ page.title | escape }}</h1><p>{{ page.description | escape }}</p></header>
+{% assign intro = content | strip %}{% if intro != '' %}<div class="series-intro prose">{{ content }}</div>{% endif %}
+{% assign members = site.posts | where: 'series', page.slug | sort: 'series_order' %}
+<div class="series-posts">{% for post in members %}<div class="series-entry"><span class="series-number" aria-hidden="true">{{ forloop.index | prepend: '0' | slice: -2, 2 }}</span>{% include post-card.html post=post %}</div>{% else %}<p class="empty-state">这个系列还在准备中。</p>{% endfor %}</div>

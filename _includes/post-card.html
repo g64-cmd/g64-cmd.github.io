@@ -1,0 +1,8 @@
+{% assign item = include.post %}
+{% assign summary = item.description | default: item.excerpt | strip_html | normalize_whitespace | truncate: 120 %}
+<article class="post-preview" data-article data-kind="{{ item.kind | default: '随笔' | escape }}" data-tags="{{ item.tags | jsonify | escape }}" data-search="{{ item.title | append: ' ' | append: summary | escape }}">
+  <div class="post-meta"><span>{{ item.kind | default: '随笔' | escape }}</span><span class="meta-dot" aria-hidden="true">·</span><time datetime="{{ item.date | date_to_xmlschema }}">{{ item.date | date: '%Y.%m.%d' }}</time></div>
+  <h3><a href="{{ item.url | relative_url }}">{{ item.title | escape }}</a></h3>
+  {% if summary != '' %}<p class="excerpt">{{ summary | escape }}</p>{% endif %}
+  {% if item.tags.size > 0 %}<div class="tags" aria-label="主题">{% for tag in item.tags %}<a href="{{ '/articles/' | relative_url }}?tag={{ tag | url_encode }}">{{ tag | escape }}</a>{% endfor %}</div>{% endif %}
+</article>

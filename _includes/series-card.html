@@ -1,0 +1,9 @@
+{% assign group = include.series %}
+{% assign members = site.posts | where: 'series', group.slug %}
+{% if members.size > 0 %}
+<a class="series-card" href="{{ group.url | relative_url }}">
+  <span class="eyebrow">{{ members.size }} 篇文章 <span aria-hidden="true">↗</span></span>
+  <h3>{{ group.title | escape }}</h3>
+  <p>{{ group.description | escape }}</p>
+</a>
+{% endif %}

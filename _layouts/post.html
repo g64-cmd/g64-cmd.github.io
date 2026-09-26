@@ -1,9 +1,30 @@
 ---
 layout: default
 ---
-<article class="post">
-  <p class="post-meta"><time datetime="{{ page.date | date: '%Y-%m-%d' }}">{{ page.date | date: '%Y 年 %m 月 %d 日' }}</time></p>
-  <h1>{{ page.title | escape }}</h1>
-  <div class="post-content">{{ content }}</div>
-  <p class="back-link"><a href="{{ '/' | relative_url }}">← 返回首页</a></p>
+<article class="post" {% if page.math %}data-math="true"{% endif %}>
+  <header class="post-header">
+    <a class="back-link" href="{{ '/articles/' | relative_url }}">← 全部文章</a>
+    <div class="post-meta"><span>{{ page.kind | default: '随笔' | escape }}</span><span aria-hidden="true">·</span><time datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | date: '%Y.%m.%d' }}</time>{% if page.updated %}<span>更新于 {{ page.updated | date: '%Y.%m.%d' }}</span>{% endif %}</div>
+    <h1>{{ page.title | escape }}</h1>
+    {% if page.description %}<p class="post-description">{{ page.description | escape }}</p>{% endif %}
+    {% if page.tags.size > 0 %}<div class="tags">{% for tag in page.tags %}<a href="{{ '/articles/' | relative_url }}?tag={{ tag | url_encode }}">{{ tag | escape }}</a>{% endfor %}</div>{% endif %}
+  </header>
+  <div class="reading-layout">
+    <aside class="toc" aria-label="文章目录" hidden><details><summary>本文目录</summary><nav aria-label="章节导航"><ol></ol></nav></details></aside>
+    <div class="post-content prose" id="article-body">{{ content }}</div>
+  </div>
+  <footer class="post-footer">
+    {% if page.series %}
+      {% assign collection = site.series | where: 'slug', page.series | first %}
+      {% assign members = site.posts | where: 'series', page.series | sort: 'series_order' %}
+      {% if collection %}
+      <div class="series-context"><p class="eyebrow">本文收录于</p><h2><a href="{{ collection.url | relative_url }}">{{ collection.title | escape }} <span aria-hidden="true">↗</span></a></h2><ol>{% for member in members %}<li>{% if member.url == page.url %}<span aria-current="page">{{ member.title | escape }}</span>{% assign position = forloop.index0 %}{% else %}<a href="{{ member.url | relative_url }}">{{ member.title | escape }}</a>{% endif %}</li>{% endfor %}</ol></div>
+      <nav class="post-pagination" aria-label="系列文章导航">
+        {% if position > 0 %}{% assign previous_index = position | minus: 1 %}{% assign previous = members[previous_index] %}<a href="{{ previous.url | relative_url }}"><span>← 上一篇</span>{{ previous.title | escape }}</a>{% endif %}
+        {% assign next_index = position | plus: 1 %}{% if next_index < members.size %}{% assign next = members[next_index] %}<a href="{{ next.url | relative_url }}"><span>下一篇 →</span>{{ next.title | escape }}</a>{% endif %}
+      </nav>
+      {% endif %}
+    {% endif %}
+    <a class="back-link" href="{{ '/articles/' | relative_url }}">← 返回文章归档</a>
+  </footer>
 </article>

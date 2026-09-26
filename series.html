@@ -1,0 +1,9 @@
+---
+layout: default
+title: 系列
+permalink: /series/
+---
+<header class="page-heading"><p class="eyebrow">COLLECTIONS / 系列</p><h1>沿着一个问题，<br>继续写。</h1><p>把零散的学习与思考，连成一条可以回看的线。</p></header>
+{% assign has_series = false %}
+<div class="series-grid">{% for series in site.series %}{% assign members = site.posts | where: 'series', series.slug %}{% if members.size > 0 %}{% assign has_series = true %}{% include series-card.html series=series %}{% endif %}{% endfor %}</div>
+{% unless has_series %}<p class="empty-state">有些思考，需要不止一篇。新的系列会在这里慢慢展开。</p>{% endunless %}

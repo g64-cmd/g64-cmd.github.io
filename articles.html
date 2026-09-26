@@ -1,0 +1,21 @@
+---
+layout: default
+title: 文章
+permalink: /articles/
+---
+<header class="page-heading"><p class="eyebrow">ARCHIVE / 归档</p><h1>文章</h1><p>把走过的路，想过的问题，慢慢整理在这里。</p></header>
+<section id="archive" aria-label="文章归档">
+  <form class="archive-controls" role="search" hidden>
+    <label class="search-field"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5"/></svg><span class="sr-only">搜索文章</span><input type="search" name="q" placeholder="搜索标题、摘要、主题…" autocomplete="off" aria-label="搜索文章"></label>
+    <div class="filter-row">
+      <label>形式 <select name="kind"><option value="">全部形式</option><option>学习记录</option><option>随笔</option><option>长文</option></select></label>
+      <label>主题 <select name="tag"><option value="">全部主题</option>{% assign topics = site.tags | sort %}{% for topic in topics %}<option>{{ topic[0] | escape }}</option>{% endfor %}</select></label>
+      <button type="reset" class="text-button">清空筛选</button>
+    </div>
+    <p id="result-count" class="result-count" role="status" aria-live="polite"></p>
+  </form>
+  {% assign years = site.posts | group_by_exp: 'post', 'post.date | date: "%Y"' %}
+  {% for year in years %}<section class="archive-year" data-year><h2>{{ year.name }}</h2><div>{% for post in year.items %}{% include post-card.html post=post %}{% endfor %}</div></section>{% endfor %}
+  <p class="empty-state" id="no-results" hidden>没有找到匹配的文章。换个关键词，或清空筛选试试。</p>
+  {% if site.posts.size == 0 %}<p class="empty-state">还没有文章，过些时候再来看看。</p>{% endif %}
+</section>
